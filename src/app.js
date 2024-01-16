@@ -1,12 +1,11 @@
 // Importation et configuration de dotenv
-require('dotenv').config();
+require("dotenv").config();
 // Module de gestion de la base de données
 const testDb = require("./_Models/_db.model");
 // Importation d'express
 const express = require("express");
 // Importation de la gestion d'async-errors
-require('express-async-errors');
-
+require("express-async-errors");
 //déclaration de variable pour express
 const app = express();
 // Active l'analyse des données JSON

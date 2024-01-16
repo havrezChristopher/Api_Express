@@ -1,5 +1,5 @@
 // Importation du module Sequelize pour gérer la base de données
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 //Récupération des variables d'environnement nécessaires à la connexion à la base de données
 const { NAME_DATABASE, NAME_LOGING, PASSWORD } = process.env;
 
@@ -11,8 +11,8 @@ if (!NAME_DATABASE || !NAME_LOGING || !PASSWORD) {
 }
 // Création d'une nouvelle instance de l'objet Sequelize pour se connecter à MSSQL
 const sequelize = new Sequelize(NAME_DATABASE, NAME_LOGING, PASSWORD, {
-  host: 'localhost', // Spécifie l'adresse du serveur de base de données
-  dialect: 'mssql', // Utilisez le dialecte 'mssql' pour SQL Server
+  host: "localhost", // Spécifie l'adresse du serveur de base de données
+  dialect: "mssql", // Utilisez le dialecte 'mssql' pour SQL Server
   port: 1433, // Port de la base de données (par défaut pour MS SQL Server)
   logging: false, // Désactiver l'affichage des journaux de requêtes SQL dans la console
   dialectOptions: {
