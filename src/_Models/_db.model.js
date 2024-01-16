@@ -1,6 +1,5 @@
-//Importation du module Sequelize pour gérer la base de données
-import Sequelize from "sequelize";
-
+// Importation du module Sequelize pour gérer la base de données
+const { Sequelize } = require('sequelize');
 //Récupération des variables d'environnement nécessaires à la connexion à la base de données
 const { NAME_DATABASE, NAME_LOGING, PASSWORD } = process.env;
 
@@ -10,28 +9,32 @@ if (!NAME_DATABASE || !NAME_LOGING || !PASSWORD) {
     "Veuillez définir les variables NAME_DATABASE, NAME_LOGING et PASSWORD dans votre fichier d'environnement."
   );
 }
-
 // Création d'une nouvelle instance de l'objet Sequelize pour se connecter à MSSQL
-export const sequelize = new Sequelize(NAME_DATABASE, NAME_LOGING, PASSWORD, {
-  dialect: "mssql", // Dialecte de la base de données (Microsoft SQL Server)
-  host: "localhost", // Hôte de la base de données
+const sequelize = new Sequelize(NAME_DATABASE, NAME_LOGING, PASSWORD, {
+  host: 'localhost', // Spécifie l'adresse du serveur de base de données
+  dialect: 'mssql', // Utilisez le dialecte 'mssql' pour SQL Server
   port: 1433, // Port de la base de données (par défaut pour MS SQL Server)
-  pool: {
-    max: 5, // Nombre maximal de connexions dans le pool
-    min: 1, // Nombre minimal de connexions dans le pool
-    idle: 10000, // Durée maximale (en millisecondes) que la connexion peut rester inactive dans le pool avant d'être libérée
-  },
   logging: false, // Désactiver l'affichage des journaux de requêtes SQL dans la console
+  dialectOptions: {
+    options: {
+      trustServerCertificate: true, // Activez cette option si vous utilisez un certificat auto-signé
+    },
+  },
 });
+
 // l'objet "db" pour stocker les modèles de base de données
-export const db = {};
+const db = {};
 
 // Associe l'instance Sequelize à "sequelize" et le module Sequelize à "Sequelize" pour une utilisation ultérieure
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// Ajoute les modèles ici
+
+// db.specifique = require('./specifique.model')(sequelize);
+
 //Fonction pour tester la connexion à la base de données
-export const testDbConnection = async () => {
+const testDbConnection = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connexion à la base de données Réussie !");
@@ -42,8 +45,6 @@ export const testDbConnection = async () => {
     return false;
   }
 };
-
 //Exporte la fonction de test de connexion ainsi que l'objet "db" pour être utilisés ailleurs dans l'application
-
-// Exportation de l'objet db en ajoutant export default {db,test} permet d export plusieur chose
-export default db;
+db.testDbConnection = testDbConnection;
+module.exports = db;
