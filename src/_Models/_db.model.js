@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 //Récupération des variables d'environnement nécessaires à la connexion à la base de données
 const { NAME_DATABASE, NAME_LOGING, PASSWORD } = process.env;
 
-// Vérifie la présence des variables d'environnement nécessaires
+// Vérifie la présence des variables d'environnement nécessaires en prod !
 if (!NAME_DATABASE || !NAME_LOGING || !PASSWORD) {
   throw new Error(
     "Veuillez définir les variables NAME_DATABASE, NAME_LOGING et PASSWORD dans votre fichier d'environnement."
@@ -37,10 +37,10 @@ db.Sequelize = Sequelize;
 const testDbConnection = async () => {
   try {
     await sequelize.authenticate();
-    console.log("Connexion à la base de données Réussie !");
+    console.log("Connexion Etablie avec la Base de Donnée !");
     return true;
   } catch (error) {
-    console.log("Connexion à la base de données Impossible!");
+    console.log("Erreur de Connection a la Base de Donnée!");
     console.error(error);
     return false;
   }

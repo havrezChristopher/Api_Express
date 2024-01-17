@@ -4,7 +4,7 @@ require("dotenv").config();
 const testDb = require("./_Models/_db.model");
 // Importation d'express
 const express = require("express");
-// Importation de la gestion d'async-errors
+// Importation de la gestion d'async-errors permet la gestion des erreur Sans (try catch)
 require("express-async-errors");
 //déclaration de variable pour express
 const app = express();
@@ -16,19 +16,8 @@ testDb.testDbConnection();
 const route = require("./_Routes/default.routes");
 // Récupération des variables d'environnement depuis le fichier .env
 const { PORT, NODE_ENV } = process.env;
-
 // Vérifie la connexion à la base de données
 const db = require("./_Models/_db.model");
-// Check la connection avec la db
-db.sequelize
-  .authenticate()
-  .then(() => console.log("connection OK!!!"))
-  .catch((error) => console.log(`connection ECHOUER !!! : ${error}`));
-
-// Migration de la base de données (s'exécute uniquement en mode de développement)
-if (NODE_ENV === "development") {
-  db.sequelize.sync({ alter: { drop: false } });
-}
 
 app.use("/api", route);
 // Run sur le port spécifique
