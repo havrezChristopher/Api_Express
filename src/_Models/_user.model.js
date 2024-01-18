@@ -1,4 +1,4 @@
-const db = require('./_db.model')
+const db = require('./_index')
 const mssql = require('mssql')
 const {Sequelize, DataTypes, ModelStatic } = require('sequelize');
 
