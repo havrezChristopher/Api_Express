@@ -1,6 +1,6 @@
-const db = require('./_index')
-const mssql = require('mssql')
-const {Sequelize, DataTypes, ModelStatic } = require('sequelize');
+const db = require("./_index");
+const mssql = require("mssql");
+const { Sequelize, DataTypes, ModelStatic } = require("sequelize");
 
 /**
  * Fonction pour créer un model Character (donc table de db)
@@ -9,5 +9,4 @@ const {Sequelize, DataTypes, ModelStatic } = require('sequelize');
  * @returns {ModelStatic<any>}
  */
 
-
-
+module.exports = userModel;
