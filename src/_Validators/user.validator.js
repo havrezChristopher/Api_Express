@@ -1,9 +1,11 @@
-const yup = require("yup");
+const yup = require('yup');
+const { object } = require('yup');
 
-const userValidator = yup.object().shape({
-  pseudo: yup.string().required().min(3).max(40),
-  email: yup.string().require().email(),
-  password: yup.string().require().min(6),
+const userValidator = object({
+    firstname: yup.string().min(1).max(50).required(),
+    lastname: yup.string().min(1).max(50).required(),
+    birthdate: yup.date(),
+    gender: yup.string().max(1).required()
 });
 
 module.exports = userValidator;

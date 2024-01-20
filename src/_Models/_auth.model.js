@@ -10,7 +10,7 @@ const db = require('./_index_Config_Db')
 module.exports = (sequelize) => {
     // Définition de l'object sequelize (db)
     const Auth = sequelize.define('Auth', {
-        // L'id se crée automatiquement si non spécifié ici
+        // L'id se crée automatiquement sinon il faut l indiquer
         login: {
             type: DataTypes.STRING(100),
             allowNull: false,
@@ -29,8 +29,10 @@ module.exports = (sequelize) => {
         tableName: 'Users',
         indexes: [
             {
-                // Création de contraintes
+                // Création de contraintes uniciter
+                //donc ici la clé unique de la table sera le melange de auth/login et jwt
                 name: 'UK_Auth__jwt',
+                // on crée la clé depuis la colonne login et jwt  
                 fields: ['login', 'jwt'],
                 unique: false,
             },

@@ -34,5 +34,6 @@ db.Sequelize=Sequelize
 // Ajoute les modèles ici
 db.Auth =require('./_auth.model')(sequelize)
 db.Register = require('./_register.model')(sequelize)
+db.User =require('./_user.model')
 
 module.exports = db;
