@@ -3,9 +3,9 @@ const db = require('../_Models/_index_Config_Db');
 const jwt = require('jsonwebtoken');
 const authService = {
 
-    exist: async (login) => {
+    exist: async (emailUser) => {
         const auth = await db.Auth.findOne({
-            where: { login }
+            where: { emailUser }
         });
 
         return new authDTO(auth);
@@ -16,10 +16,10 @@ const authService = {
         return new authDTO(auth)
     },
 
-    addJwt: async (jwt, id) => {
+    addJwt: async (jwt, idUser) => {
         // Vérification de l'existence de l'utilisateur
         const userFound = await db.Auth.findOne({
-            where: { id }
+            where: { idUser }
         });
         // S'il existe, on lui donne un jwt (s'il n'en a pas encore)
         await userFound.update({ jwt })
@@ -27,9 +27,9 @@ const authService = {
         return userFound;
     },
 
-    getJwt: async (id) => {
+    getJwt: async (idUser) => {
         const jwtExist = await db.Auth.findOne({
-            where: { id }
+            where: { idUser }
         });
 
         return jwtExist;

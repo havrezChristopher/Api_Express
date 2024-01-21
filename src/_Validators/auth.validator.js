@@ -2,8 +2,8 @@ const yup = require('yup');
 const { object } = require('yup');
 
 const authValidator = object({
-    login: yup.string().min(1).max(100).required(),
-    password: yup.string().min(8).max(50).required()
+    emailUser: yup.string().email().required(),
+    password: yup.string().min(6).max(40).required()
 })
 
 module.exports = authValidator;
