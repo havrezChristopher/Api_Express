@@ -1,6 +1,6 @@
 // Importer route.specifique.js
 const authRouter = require('./_auth.router');
-// const userRouter = require('./_user.route')
+const userRouter = require('./_user.route')
 // const evenementRouter = require('./evenements.route')
 
 
@@ -11,8 +11,7 @@ const router = require('express').Router();
 
 // Utilisation du router pour gérer les routes de nos Entiter 
 router.use('/auth', authRouter);
-
-// router.use('/user',userRouter)
+router.use('/user',userRouter)
 // router.use('/evenement',evenementRouter)
 
 //  Exportation du routeur
