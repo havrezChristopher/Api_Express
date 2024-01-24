@@ -14,10 +14,21 @@ routerUser.route('')
     .all((req, res) => {
         res.sendStatus(405); 
     });
-routerUser.get('/:idUser',userController.getById)
+    routerUser.route('/:idUser')
+    .get(userController.update)
+    .all((req, res) => {
+        res.sendStatus(405); 
+    });
+    routerUser.route('/:idUser')
+    .get(userController.delete)
+    .all((req, res) => {
+        res.sendStatus(405); 
+    });
+    //* autre syntax===> 
+// routerUser.get('/:idUser',userController.getById)
 // routerUser.post('/register',userController.getAll)
-routerUser.patch('/:idUser',userController.update)
-routerUser.delete('/idUser',userController.delete)
+// routerUser.patch('/:idUser',userController.update)
+// routerUser.delete('/idUser',userController.delete)
 
 
 

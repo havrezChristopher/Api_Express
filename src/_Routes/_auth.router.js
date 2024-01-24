@@ -1,7 +1,6 @@
 const authController = require('../_Controllers/auth.controller');
 const authRouter = require('express').Router();
 
-
 authRouter.route('/login')
     .post(authController.login)
     // permet en cas d autre request de renvoyer une erreur 
