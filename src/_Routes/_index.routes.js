@@ -11,6 +11,7 @@ const router = require('express').Router();
 
 // Utilisation du router pour gérer les routes de nos Entiter 
 router.use('/auth', authRouter);
+
 // router.use('/user',userRouter)
 // router.use('/evenement',evenementRouter)
 

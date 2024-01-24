@@ -1,4 +1,5 @@
 const authValidator = require("../_Validators/auth.validator");
+// Compléxiter du hashage sa s appel le sault 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authService = require("../_Services/auth.service");
@@ -45,6 +46,7 @@ const authController = {
       res
         // On informe que l'insertion des données s'est correctement déroulée, et que le compte est crée
         .status(201)
+        // .location pour envoyer les donner de l utilisateur sur la page voulue (api/auth/login)sync avec le front !
         .json(authInserted);
     }
   },
@@ -68,9 +70,7 @@ const authController = {
             }
       // Vérification de l'existence d'un token (jwt) pour cet utilisateur
       const existingToken = await authService.getJwt(user.idUser);
-      console.log("Testt-----------------------" ,user.jwt);
       if (existingToken.jwt) {
-      console.log("Dedant -----------------------");
         // Vérification de la validité du token (jwt)
         const tokenValid = await authService.verifyJwt(existingToken.jwt);
 
