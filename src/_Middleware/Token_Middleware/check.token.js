@@ -11,6 +11,7 @@ const extractBearer = authorization => {
     }
 
     // On isole le token
+    // Regex pour contraler et enpecher la modification du token
     const matches = authorization.match(/(bearer)\s+(\S+)/i)
 
     return matches && matches[2]
@@ -35,9 +36,6 @@ const checkTokenMiddleware = (req, res, next) => {
 
     //Si on arrive ici cest que on a recup un token  
     jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-        console.log('jwt',jwt.decode(token));
-        console.log('### ERREUR TOKEN ###',err);
-        console.log('DECODED TOKEN ==>',decodedToken);
 
         if(err){
             return res.status(401).json({message: 'Bad token'})
