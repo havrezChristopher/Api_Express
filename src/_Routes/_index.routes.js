@@ -6,7 +6,8 @@ const userRouter = require('./_user.route')
 
 //  Importation du module de routage d'Express
 const router = require('express').Router();
-
+// Import middelWareToken
+const checkTokenMiddleware = require ('../_Middleware/Token_Middleware/check.token')
 //! *********************Middleware pour logger les dates de toute les requette sur toute les route*********************
 router.use((req,res,next) =>{
     const event = new Date()
@@ -19,7 +20,7 @@ router.use((req,res,next) =>{
 
 // Utilisation du router pour gérer les routes de nos Entiter 
 router.use('/auth', authRouter);
-router.use('/user',userRouter)
+router.use('/user',checkTokenMiddleware,userRouter)
 // router.use('/evenement',evenementRouter)
 
 //  Exportation du routeur

@@ -45,7 +45,7 @@ const authController = {
     if (authInserted) {
       res
         // On informe que l'insertion des données s'est correctement déroulée, et que le compte est crée
-        .status(201)
+        .status(201).json('SucSses Utilisateur inserer ')
         // .location pour envoyer les donner de l utilisateur sur la page voulue (api/auth/login)sync avec le front !
         .json(authInserted);
     }
@@ -72,10 +72,12 @@ const authController = {
       const existingToken = await authService.getJwt(user.idUser);
       if (existingToken.jwt) {
         // Vérification de la validité du token (jwt)
+
         const tokenValid = await authService.verifyJwt(existingToken.jwt);
 
         if (tokenValid) {
           // Le token (jwt) est valide, envoi de l'information dans le header de la requête
+          
           res.setHeader("Authorization", `Bearer ${existingToken.jwt}`);
           return res.status(200).json({ token: existingToken.jwt });
         }
@@ -87,7 +89,7 @@ const authController = {
         emailUser: user.login,
       };
       const options = {
-        expiresIn: "2d",
+        expiresIn: "15M",
       };
 
       // Signer le token (jwt) avec le SECRET
@@ -99,6 +101,8 @@ const authController = {
 
       if (clientJwt) {
         // Si l'insertion s'est correctement déroulée, on envoi les informations dans le header et au front en json
+        console.log('Token',token);
+        console.log('play ',payload);
         res.setHeader("Authorization", `Bearer ${token}`);
         return res.status(200).json({ token });
       }
