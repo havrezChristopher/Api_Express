@@ -12,7 +12,7 @@ const authController = {
     // Validation les informations récupérées depuis les données utilisateur
     const validatedData = await authValidator.validate(authData);
 
-    // Destructuring des données vérifées
+    // Destructuring des données a vérifées
     const {
       emailUser,
       password,
@@ -60,7 +60,7 @@ const authController = {
       const user = await authService.exist(emailUser);
       if (!user) {
         // Si l'utilisateur n'existe pas, renvoi une réponse 401 (Unauthorized)
-        return res.status(401).json({ message: "AdreSse Email non trouvé ..." });
+        return res.status(401).json({ message: "Utilisateur non trouvé ..." });
       }
             // Vérification du password fourni par l'utilisateur avec le password hashé dans la DB
             const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
@@ -68,6 +68,11 @@ const authController = {
               // Si les mots de passe ne correspondent pas, renvoi une réponse 401 (Unauthorized)
               return res.status(401).json({ message: "Mot de passe incorrect" });
             }
+//! **********************               Mots de passe perdu                     ********************************************** 
+
+
+
+//! **********************               Mots de passe perdu                     ********************************************** 
       // Vérification de l'existence d'un token (jwt) pour cet utilisateur
       const existingToken = await authService.getJwt(user.idUser);
       if (existingToken.jwt) {
@@ -85,11 +90,12 @@ const authController = {
       }
       // Si les password correspondent, on va créer un token (jwt) pour l'utilisateur
       const payload = {
-        userId: user.id,
-        emailUser: user.login,
+        userId: user.idUser,
+        emailUser: user.emailUser,
+        role:user.role
       };
       const options = {
-        expiresIn: "15M",
+        expiresIn: "2D",
       };
 
       // Signer le token (jwt) avec le SECRET

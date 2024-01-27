@@ -47,7 +47,7 @@ const authService = {
         
         try {
             const decoded = jwt.verify(token, secret);
-            return decoded.json('jwt')
+            return true
         } catch (err) {
             console.error('Erreur de vérification du token :', err);
         return null; // Retourner null en cas d'erreur de vérification
