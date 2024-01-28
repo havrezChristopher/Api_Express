@@ -26,6 +26,24 @@ const userController = {
     res.status(200).json(userDTO);
     //  Version API_REST_FULL
   },
+  getEMAIL: async (req, res) => {
+    // Récupération de l'id depuis les paramètres
+
+    const { emailUser } = req.body;
+
+    // Récupération des informations demandées
+    const userDTO = await userService.fetchEmail(emailUser);
+
+    // Si pas d'object correspondant à l'id, 404
+    if (!userDTO) {
+      res.sendStatus(404);
+      return;
+    }
+
+    // Si tout s'est bien passé, 200 et envoi des informations
+    res.status(200).json(userDTO);
+    //  Version API_REST_FULL
+  },
   getAll: async (req, res) => {
     console.log("All");
     const usersDTO = await userService.fetchAll();
