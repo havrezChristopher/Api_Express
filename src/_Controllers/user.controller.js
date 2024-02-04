@@ -78,7 +78,7 @@ const userController = {
 
     // Si supprimé, 204
     if (isDeleted) {
-      res.sendStatus(204);
+      res.sendStatus(204);json({message: '*** Donnée suprimer *** '})
       return;
     }
     // Si pas, 404
