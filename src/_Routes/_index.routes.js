@@ -22,6 +22,7 @@ router.use((req,res,next) =>{
 // Utilisation du router pour gérer les routes de nos Entiter 
 router.use('/auth', authRouter);
 router.use('/user',checkTokenMiddleware,userRouter)
+// checkTokenMiddleware,
 //!ForgotPassword 
 router.use('/ForgotPassword', ForgotPassword);
 // router.use('/evenement',evenementRouter)
