@@ -51,6 +51,26 @@ const userService = {
         const user = await db.Auth.create(data)
         return new userDTO(user)
     },
+    //! ******************************************************************************************************************************* 
+    updateUser: async (idUser, data) => {
+        try {
+            const user = await db.Utilisateur.findOne({
+                where: { idUtilisateur: idUser },
+            });
+
+            if (!user) {
+                throw new Error('Utilisateur non trouvé');
+            }
+
+            await user.update(data);
+
+            return new UtilisateurDTO(user);//dto specifique qui empeche la modification du mots de passe
+        } catch (error) {//cree validator
+            throw error;
+        }
+    },
+    //! ******************************************************************************************************************************* 
+
 
     delete: async (idUser) => {
         const nbRowDeleted = await db.Auth.destroy({

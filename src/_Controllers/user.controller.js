@@ -8,7 +8,7 @@ const userController = {
     const { idUser } = req.params;
 
     // Vérification de l'id, s'il est d'un autre type que number alors, 400
-    if (isNaN(idUser)) {
+    if (!idUser) {
       res.sendStatus(400);
       return;
     }
@@ -61,14 +61,35 @@ const userController = {
     res
       // On informe que l'insertion de données s'est correctement déroulée
       .status(201)
-      // On redirige l'utilisateur sur les informations détaillées du personnage qu'il vient de créer (via son id)
+      // On redirige l'utilisateur sur les informations détaillées de l utilisateur qu'il vient de créer (via son id)
       .location(`api/user/${userInserted.id}`)
       // On affiche les informations
       .json(userInserted);
   },
+  //! *********************************************************************************************************************
   update: async (req, res) => {
-    res.sendStatus(501);
+    try {
+      const { idUser } = req.params; //parametre url
+      const User = await userService.fetchOne(idUser);
+      const NewfirstName = User.firstName;
+      const userData = req.body;
+      userData.firstName = NewfirstName; //copie l ancien mdp afin de ne pas pouvoir le modif ici
+      const validatedData = await userValidator.validate(userData);
+      const updatedUser = await userService.updateUser(idUser, validatedData);
+
+      if (!updatedUser) {
+        res.sendStatus(404);
+        return;
+      }
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour d'un utilisateur :", error);
+      res.status(400).json({ error: "Erreur lors de la mise à jour" });
+    }
   },
+  //! *********************************************************************************************************************
+
   delete: async (req, res) => {
     // Récupération de l'id depuis les paramètres
     const { id } = req.params;
@@ -78,7 +99,8 @@ const userController = {
 
     // Si supprimé, 204
     if (isDeleted) {
-      res.sendStatus(204);json({message: '*** Donnée suprimer *** '})
+      res.sendStatus(204);
+      json({ message: "*** utilisateur Suprimer *** " });
       return;
     }
     // Si pas, 404

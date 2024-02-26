@@ -77,7 +77,7 @@ const authController = {
         role: user.role,
       };
       const options = {
-        expiresIn: "2D",
+        expiresIn: "20D",
       };
 
       // Signer le token (jwt) avec le SECRET
