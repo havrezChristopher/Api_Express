@@ -20,7 +20,7 @@ routerUser
   });
 routerUser
   .route("/:idUser")
-  .patch(userController.update) // Mise à jour d'un utilisateur
+  .patch(userController.updateUser) // Mise à jour d'un utilisateur
   .all((req, res) => {
     res.sendStatus(405);
   });

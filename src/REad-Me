@@ -1,6 +1,11 @@
+
+
+//* 1.Validation avec yup mettre un bon shémas de validation  
+//* 2.tester et mettre a jours les bonne donnée front back et insomnia 
+
+
+
 //middleware fonctionne Cause ===> Fonction de verification du token !!!
-
-
 //!  Création methode mots de passe perdu 
 //! Go front ===>
 // ne pas oublier recaptcha 

@@ -71,28 +71,33 @@ try{
       // On affiche les informations
       .json(userInserted);
   },
-  //! *********************************************************************************************************************
-  update: async (req, res) => {
-    try {
-      const { idUser } = req.params; //parametre url
-      const User = await userService.fetchOne(idUser);
-      const NewfirstName = User.firstName;
-      const userData = req.body;
-      userData.firstName = NewfirstName; //copie l ancien mdp afin de ne pas pouvoir le modif ici
-      const validatedData = await userValidator.validate(userData);
-      const updatedUser = await userService.updateUser(idUser, validatedData);
-
-      if (!updatedUser) {
-        res.sendStatus(404);
-        return;
+    updateUser : async (req, res) => {
+      const { id } = req.params;
+      const updateData = req.body;
+  
+      try {
+          // Validation des données de mise à jour
+          await userUpdateSchema.validate(updateData, { abortEarly: false }); //abortEarly: false permet à Yup de retourner toutes les erreurs de validation 
+  
+          // Vérification de l'existence de l'utilisateur
+          const user = await db.User.findByPk(id);
+          if (!user) {
+              return res.status(404).json({ message: "Utilisateur non trouvé" });
+          }
+          // Mise à jour de l'utilisateur avec les nouvelles données
+          await user.update(updateData);
+          // Envoi d'une réponse de succès avec l'utilisateur mis à jour
+          res.json({ message: "Utilisateur mis à jour avec succès", user });
+      } catch (error) {
+          // Gestion des erreurs de validation
+          if (error instanceof yup.ValidationError) {
+              return res.status(400).json({ message: "Validation des données échouée", errors: error.errors });
+          }
+          // Gestion des autres erreurs
+          console.error('Erreur lors de la mise à jour de l’utilisateur:', error);
+          res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
       }
-
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour d'un utilisateur :", error);
-      res.status(400).json({ error: "Erreur lors de la mise à jour" });
-    }
-  },
+    },
   //! *********************************************************************************************************************
     // Supprimer (mettre à la poubelle) un article
     trashUser: async (req, res) => {
@@ -129,5 +134,6 @@ try{
     res.sendStatus(404);
   },
 };
+
 
 module.exports = userController;
