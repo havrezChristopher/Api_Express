@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const authService = require("../_Services/auth.service");
 
 const authController = {
+  // #region *** Register ***
   register: async (req, res) => {
 
   try {
@@ -35,7 +36,7 @@ const authController = {
     res.status(500).json({ message: "Erreur lors de l'inscription" });
   }
 },
-
+ // #endregion Register
   
 
   login: async (req, res) => {
@@ -100,51 +101,3 @@ const authController = {
 };
 
 module.exports = authController;
-
-// ****Register Aurelien******
-// register: async (req, res) => {
-  //   // Récupération des données utilsateur
-  //   const authData = req.body;
-
-  //   // Validation les informations récupérées depuis les données utilisateur
-  //   const validatedData = await authValidator.validate(authData);
-
-  //   // Destructuring des données a vérifées
-  //   const {
-  //     idUser,
-  //   emailUser,
-  //   emailConfirmed,
-  //   firstName,
-  //   lastName,
-  //   role,
-  //   jwt,
-  //   birthday,
-  //   gender,
-  //   lastConnexion,
-  //   idPhoto,
-  //   } = validatedData;
-  //   const hashedPassword = bcrypt.hashSync(password, 10);
-  //   // Envoi des données validées et hashées à la DB
-  //   const authInserted = await authService.insert({
-  //     hashedPassword,
-  //     idUser,
-  //     emailUser,
-  //     emailConfirmed,
-  //     firstName,
-  //     lastName,
-  //     role,
-  //     jwt,
-  //     birthday,
-  //     gender,
-  //     lastConnexion,
-  //     idPhoto,
-  //   });
-    
-  //   if (authInserted) {
-  //     res
-  //       // On informe que l'insertion des données s'est correctement déroulée, et que le compte est crée
-  //       .status(201)
-  //       .json("Utilisateur inséré avec succès")
-  //       // .location pour envoyer les donner de l utilisateur sur la page voulue (api/auth/login)sync avec le front !
-  //       .json(authInserted);
-  //   }

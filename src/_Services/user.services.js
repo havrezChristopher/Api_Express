@@ -54,8 +54,8 @@ const userService = {
     //! ******************************************************************************************************************************* 
     updateUser: async (idUser, data) => {
         try {
-            const user = await db.Utilisateur.findOne({
-                where: { idUtilisateur: idUser },
+            const user = await db.Auth.findOne({
+                where: { idUser},
             });
 
             if (!user) {
@@ -64,13 +64,12 @@ const userService = {
 
             await user.update(data);
 
-            return new UtilisateurDTO(user);//dto specifique qui empeche la modification du mots de passe
-        } catch (error) {//cree validator
+          
+        } catch (error) {
             throw error;
         }
     },
     //! ******************************************************************************************************************************* 
-
 
     delete: async (idUser) => {
         const nbRowDeleted = await db.Auth.destroy({

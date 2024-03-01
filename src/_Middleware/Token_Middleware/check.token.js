@@ -33,10 +33,7 @@ const checkTokenMiddleware = (req, res, next) => {
   // Vérifier la validité du token
   //Si on arrive ici cest que on a recup un token
   jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-    // if(token !== "un_token_de_test_valide") {
-    //     return res.status(401).json({ message: 'Token non valide' });
-    // }
-    // next();
+
     if (err) {
       console.error("Erreur de vérification du token:", err);
       return res
