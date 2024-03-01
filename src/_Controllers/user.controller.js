@@ -4,12 +4,12 @@ const userValidator = require("../_Validators/user.validator");
 const userController = {
   getById: async (req, res) => {
     // Récupération de l'id depuis les paramètres
-
+try{
     const { idUser } = req.params;
 
     // Vérification de l'id, s'il est d'un autre type que number alors, 400
     if (!idUser) {
-      res.sendStatus(400);
+      res.sendStatus(400).json({message: 'Paramettre Manquant ou invalide !'});
       return;
     }
 
@@ -18,12 +18,17 @@ const userController = {
 
     // Si pas d'object correspondant à l'id, 404
     if (!userDTO) {
-      res.sendStatus(404);
-      return;
+      return res.sendStatus(404).json({message : 'Utilisateur inexistant'});
+    
     }
 
     // Si tout s'est bien passé, 200 et envoi des informations
-    res.status(200).json(userDTO);
+    return res.status(200).json(userDTO);
+    }catch (error){
+      console.error('Erreur lors de la récupération de l’utilisateur:', error);
+      // code d'erreur générique
+      return res.status(500).json({message: 'Erreur serveur'});
+    }
     //  Version API_REST_FULL
   },
   getEMAIL: async (req, res) => {
@@ -60,7 +65,7 @@ const userController = {
 
     res
       // On informe que l'insertion de données s'est correctement déroulée
-      .status(201)
+      .status(201).json({message: 'Utilisateur Correctements Enregistrer'})
       // On redirige l'utilisateur sur les informations détaillées de l utilisateur qu'il vient de créer (via son id)
       .location(`api/user/${userInserted.id}`)
       // On affiche les informations
@@ -89,7 +94,24 @@ const userController = {
     }
   },
   //! *********************************************************************************************************************
-
+    // Supprimer (mettre à la poubelle) un article
+    trashUser: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const deleted = await User.destroy({ where: { id: id } });
+        if (deleted) {
+          res.status(204).send();
+        } else {
+          res.status(404).json({ message: 'User not found' });
+        }
+      } catch (error) {
+        res.status(400).json({ message: error.message });
+      }
+    },
+  
+    // Restaurer un User depuis la poubelle
+    untrashUser: async (req, res) => {
+   },
   delete: async (req, res) => {
     // Récupération de l'id depuis les paramètres
     const { id } = req.params;

@@ -1,7 +1,8 @@
+//middleware fonctionne Cause ===> Fonction de verification du token !!!
+
 
 //!  Création methode mots de passe perdu 
 //! Go front ===>
-
 // ne pas oublier recaptcha 
 
 

@@ -14,8 +14,12 @@ const { required } = require('../_Validators/auth.validator');
 //! *********************Middleware pour logger les dates de toute les requette sur toute les route*********************
 router.use((req,res,next) =>{
     const event = new Date()
-    console.log('Route Authentification Time ::',event.toString());
-    next()
+    // console.log('Route Authentification Time ::',event.toString());
+    // next()
+    //! Récuperation ip etc ... 
+    const clientIp = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'];
+    console.log(`[Date: ${event.toString()}] - [IP: ${clientIp}] - [Route: ${req.originalUrl}] - [Method: ${req.method}]`);
+    next();
 })
 //* Adapter pour les router Spécifique et ajouter option voir Doc Express (req)
 //! *********************Middleware pour logger les dates de toute les requette sur toute les route*********************
@@ -23,9 +27,10 @@ router.use((req,res,next) =>{
 
 // Utilisation du router pour gérer les routes de nos Entiter 
 router.use('/auth', authRouter);
+// checkTokenMiddleware ==> Great sa fonctionne touche a rien !
 router.use('/user',checkTokenMiddleware,userRouter)
 router.use('/article',articleRouter)
-// checkTokenMiddleware,
+
 //!ForgotPassword 
 router.use('/ForgotPassword', ForgotPassword);
 

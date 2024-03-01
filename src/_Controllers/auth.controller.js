@@ -89,14 +89,12 @@ const authController = {
 
       if (clientJwt) {
         // Si l'insertion s'est correctement déroulée, on envoi les informations dans le header et au front en json
-        console.log("*** Token ***", token);
-        console.log("*** play ***", payload);
         res.setHeader("Authorization", `Bearer ${token}`);
         return res.status(200).json({ token });
       }
     } catch (err) {
       console.error(err);
-      res.sendStatus(404);
+      res.status(401).json({ message: "Authentification échouée" })
     }
   },
 };
