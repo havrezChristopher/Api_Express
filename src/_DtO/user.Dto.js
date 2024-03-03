@@ -4,7 +4,9 @@ class userDTO {
     idUser;
     emailUser
     emailConfirmed
+    // Prenom =>
     firstname;
+    // Nom =>
     lastname;
     role;
     hashedPassword
@@ -38,17 +40,23 @@ class userDetailDTO {
 
     // Props
     id;
+    idPhoto
+    role;
     firstname;
     lastname;
-    gender;
     birthdate;
+    gender;
+    // emailUser
+    // emailConfirmed
 
     constructor(data) {
         this.id = data.id;
+        this.idPhoto =data.idPhoto;
+        this.role = data.role;
         this.firstname = data.firstname;
         this.lastname = data.lastname;
-        this.gender = data.gender;
         this.birthdate = data.birthdate;
+        this.gender = data.gender;
     }
 }
 

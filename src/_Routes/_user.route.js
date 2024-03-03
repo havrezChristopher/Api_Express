@@ -17,12 +17,14 @@ userRouter
   .get(userController.getById) // Récupérer un utilisateur par ID
   .patch(userController.updateUser) // Mise à jour d'un utilisateur
   .delete(userController.delete) // Suppression d'un utilisateur
+  .post(userController.add)// Voir pour adapter en fonction du model auth 
   .all((req, res) => {
     res.sendStatus(405);
   });
 userRouter
-  .route("/untrash/:idUser")
-  .post(userController.untrashUser)         // Restaurer un article depuis la poubelle
+  .route("/add")
+  .post(userController.add)         // Restaurer un article depuis la poubelle
+  // untrashUser
   .all((req, res) => {
     res.sendStatus(405);
   });

@@ -51,7 +51,7 @@ const userController = {
     //  Version API_REST_FULL
   },
   getAll: async (req, res) => {
-    console.log("All");
+
     const usersDTO = await userService.fetchAll();
     res.status(200).json(usersDTO);
   },
